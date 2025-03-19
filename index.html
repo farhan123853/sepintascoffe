@@ -3,74 +3,559 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Web Sederhana</title>
+    <title>Sepintas Coffee</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700&display=swap');
+        
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
+            font-family: 'Playfair Display', serif;
+            background: #1e1e1e;
+            color: #fff;
         }
-        header {
-            background-color: #007bff;
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(135deg, #3e2723, #1e1e1e);
+            padding: 20px 40px;
             color: white;
-            padding: 15px 20px;
-            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: background 0.3s ease;
         }
-        nav {
-            background-color: #0056b3;
-            padding: 10px;
-            text-align: center;
+        
+        .header.scrolled {
+            background: rgba(30, 30, 30, 0.8);
+            backdrop-filter: blur(10px);
         }
-        nav a {
+        
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            font-family: 'Playfair Display', serif;
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .logo:hover {
+            transform: scale(1.1);
+        }
+        
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .nav-links li {
+            display: inline;
+        }
+        
+        .nav-links a {
             color: white;
             text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
+            font-size: 1.2em;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
         }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        main {
-            padding: 20px;
-            text-align: center;
-        }
-        footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
             width: 100%;
+            height: 3px;
+            background: #ffcc00;
+            left: 0;
+            bottom: 0;
+            transform: scaleX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .cta-button {
+            background: #ffcc00;
+            color: #3e2723;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            transition: 0.3s;
+        }
+        
+        .cta-button:hover {
+            background: #e6b800;
+            transform: translateY(-2px);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 2em;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .menu-toggle:hover {
+            transform: rotate(90deg);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                background: #3e2723;
+                width: 100%;
+                text-align: center;
+                padding: 20px 0;
+                border-radius: 0 0 10px 10px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+        }
+        
+        .hero {
+            height: 100vh;
+            background: url('coffee-shop-hero.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+        
+        .hero h1 {
+            font-size: 4em;
+            margin: 0;
+        }
+        
+        .hero p {
+            font-size: 1.5em;
+            max-width: 600px;
+            margin-top: 10px;
+        }
+        
+        .hero .cta-button {
+            margin-top: 20px;
+        }
+
+        .order-button {
+            background: #ffcc00;
+            color: #1e1e1e;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .order-button:hover {
+            background: #e6b800;
         }
     </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;600;700&display=swap');
+        
+        body {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+            background: #1e1e1e;
+            color: #fff;
+        }
+        
+        .menu-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+    
+        .header {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: linear-gradient(135deg, #3e2723, #1e1e1e);
+                padding: 15px 40px;
+                position: fixed;
+                width: 100%;
+                top: 0;
+                z-index: 1000;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            }
+    
+            .logo {
+                display: flex;
+                align-items: center;
+                font-size: 1.8em;
+                font-weight: bold;
+            }
+            
+            .logo img {
+                width: 50px;
+                height: 50px;
+                margin-right: 10px;
+                border-radius: 50%;
+            }
+    
+        .menu-item {
+            background: #3e2723;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 280px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
+        }
+        
+        .menu-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .menu-item img {
+            width: 100%;
+            border-radius: 10px;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .carousel {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .carousel img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    
+        .contact {
+                text-align: center;
+                padding: 50px;
+                background: #3e2723;
+                margin-top: 50px;
+            }
+    
+            .contact h2 {
+                margin-bottom: 20px;
+            }
+    
+            .contact p {
+                font-size: 1.1em;
+            }
+    
+            .contact a {
+                color: #ffcc00;
+                text-decoration: none;
+                font-weight: bold;
+            }
+        
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .prev { left: 10px; }
+        .next { right: 10px; }
+        
+        .button:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+        .categories, .recommendations {
+            margin: 40px auto;
+            max-width: 800px;
+        }
+        .categories a, .recommendations .product {
+            display: block;
+            padding: 15px;
+            margin: 10px auto;
+            background-color: #ffffff;
+            text-decoration: none;
+            color: black;
+            border-radius: 5px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        .categories a:hover, .recommendations .product:hover {
+            transform: scale(1.05);
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .product {
+            width: 250px;
+            text-align: center;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+            display: block;
+            margin: 0 auto;
+        }
+        .carousel {
+            position: relative;
+            max-width: 600px;
+            margin: 40px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-images img {
+            width: 100%;
+            flex-shrink: 0;
+            border-radius: 10px;
+        }
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .prev {
+            left: 10px;
+        }
+        .next {
+            right: 10px;
+        }
+
+        .carousel {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    overflow: hidden;
+}
+
+.carousel-images {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.carousel-img {
+    width: 100%;
+    height: auto;
+}
+
+.promo-item {
+    flex: 1 0 100%;
+    text-align: center;
+    display: none;
+}
+
+.promo-item.active {
+    display: block;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+.carousel-indicators {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.dot {
+    height: 10px;
+    width: 10px;
+    margin: 0 5px;
+    background-color: #ccc;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.dot.active {
+    background-color: #333;
+}
+
+    </style>
+
 </head>
+
 <body>
-    <header>
-        <h1>Selamat Datang di Halaman Web Sederhana</h1>
+    <header class="header">
+        <div class="logo">
+            <img src="logo.jpeg" alt="Logo Sepintas Coffee">
+            <span>Sepintas Coffee</span>
+        </div>
     </header>
-    <nav>
-        <a href="#beranda">Beranda</a>
-        <a href="#tentang">Tentang</a>
-        <a href="#kontak">Kontak</a>
-    </nav>
-    <main>
-        <section id="beranda">
-            <h2>Beranda</h2>
-            <p>Ini adalah beranda situs web Anda. Tambahkan konten di sini.</p>
+
+    <header class="header" id="navbar">
+        <div class="logo">☕ Sepintas Coffee</div>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#about">Tentang Kami</a></li>
+                <li><a href="#menu">Menu</a></li>
+                <li><a href="#contact">Kontak</a></li>
+                <li><a href="#order" class="order-button">Pesan Sekarang</a></li>
+            </ul>
+        </nav>
+        <div class="menu-toggle" id="menu-toggle">☰</div>
+    </header>
+
+        <header class="hero">
+            <h1>Selamat Datang di Sepintas Coffee</h1>
+            <p>Rasakan kehangatan kopi terbaik dengan biji kopi Nusantara dan cita rasa yang istimewa</p>
+            <a href="/menu" class="button">Lihat Menu</a>
+            
+            <section class="promo">
+                <h2>Promo Spesial Untuk Anda!</h2>
+                <p>Jangan lewatkan diskon menarik untuk produk favorit Anda.</p>
+                <div class="carousel">
+                    <!-- Tombol navigasi kiri -->
+                    <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+            
+                    <!-- Kontainer untuk gambar-gambar carousel -->
+                    <div class="carousel-images">
+                        <div class="promo-item">
+                            <img src="caramel.jpg" alt="Kopi Caramel" class="carousel-img">
+                            <p><strong>Kopi Caramel</strong> - Diskon 20%</p>
+                            <button class="buy-btn">Beli Sekarang</button>
+                        </div>
+                        <div class="promo-item">
+                            <img src="kentang.jpg" alt="Kentang Goreng" class="carousel-img">
+                            <p><strong>Kentang Goreng</strong> - Diskon 25%</p>
+                            <button class="buy-btn">Beli Sekarang</button>
+                        </div>
+                        <div class="promo-item">
+                            <img src="vanilla_latte.jpg" alt="Vanilla Latte" class="carousel-img">
+                            <p><strong>Vanilla Latte</strong> - Diskon 15%</p>
+                            <button class="buy-btn">Beli Sekarang</button>
+                        </div>
+                    </div>
+            
+                    <!-- Tombol navigasi kanan -->
+                    <button class="next" onclick="moveSlide(1)">&#10095;</button>
+                </div>
+            
+                <!-- Indikator carousel -->
+                <div class="carousel-indicators">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                </div>
+            </section>
+            
+            
+        </header>
+
+
+    <section class="categories">
+        <h2>Kategori Produk</h2>
+        <div class="category-links">
+            <a href="/menu?category=makanan">🍔 Makanan</a>
+            <a href="/menu?category=minuman">🥤 Minuman</a>
+            <a href="/menu?category=promo">🔥 Promo</a>
+        </div>
+    </section>
+
+</body>
+        
+    <body>
+         <section class="menu-section" id="menu">
+             <h2 style="text-align: center; margin-top: 50px;">Menu Kami</h2>
+            <div class="menu-container">
+                <div class="menu-item">
+                        <img src="susu gula aren.jpg" alt="Kopi 1">
+                        <h3>Kopi Susu Gula Aren</h3>
+                        <p>Rp10.000</p>
+                 </div>
+                 <div class="menu-item">
+                        <img src="vanilla latte.jpg" alt="Kopi 2">
+                        <h3>Vanilla Latte</h3>
+                        <p>Rp12.000</p>
+                </div>
+                <div class="menu-item">
+                        <img src="caramel.jpg" alt="Kopi 3">
+                        <h3>Caramel Latte</h3>
+                        <p>Rp12.000</p>
+                 </div>
+            </div>
         </section>
-        <section id="tentang">
-            <h2>Tentang</h2>
-            <p>Bagikan informasi tentang situs atau perusahaan Anda di sini.</p>
+            
+        <div class="carousel">
+            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+            <div class="carousel-images">
+                <img src="caramel.jpg" alt="Kopi 1">
+                <img src="kentang.jpg" alt="Kopi 2">
+                <img src="vanilla latte.jpg" alt="Kopi 3">
+            </div>
+            <button class="next" onclick="moveSlide(1)">&#10095;</button>
+        </div>  
+
+        <section class="contact" id="contact">
+            <h2>Kontak Kami</h2>
+            <p>Email: <a href="mailto:info@sepintascoffee.com">info@sepintascoffee.com</a></p>
+            <p>Telepon: <a href="tel:+62123456789">+62 123 456 789</a></p>
+            <p>Alamat: Jl. Kopi No. 10, Jakarta</p>
         </section>
-        <section id="kontak">
-            <h2>Kontak</h2>
-            <p>Isi detail kontak Anda di bagian ini agar pengunjung bisa menghubungi Anda.</p>
-        </section>
-    </main>
-    <footer>
-        &copy; 2025 Halaman Web Sederhana. Semua Hak Dilindungi.
-    </footer>
 </body>
 </html>
